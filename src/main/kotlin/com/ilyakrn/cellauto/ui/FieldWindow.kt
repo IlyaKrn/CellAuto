@@ -32,7 +32,9 @@ class FieldWindow(private val h: Int, private val w: Int, private val cellSize: 
 
     private object selectedCell{
         var x: Int = 0
+            @Synchronized get
         var y: Int = 0
+            @Synchronized get
     }
 
     private val lastStepsPerSecond = arrayListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
