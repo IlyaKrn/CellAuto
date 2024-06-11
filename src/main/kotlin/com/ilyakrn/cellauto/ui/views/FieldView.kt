@@ -32,7 +32,6 @@ class FieldView<T>(fHeight: Int, fWidth: Int, private val cellSize: Int, private
     fun update(field: Array<Array<T>>){
         for (i in field.indices) {
             for (j in 0..<field[0].size) {
-                println(field[i][j])
                 drawRect(colorRules.getColor(field[i][j]), i * cellSize, j * cellSize, cellSize, cellSize)
             }
         }

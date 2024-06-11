@@ -1,9 +1,7 @@
 package com.ilyakrn.cellauto.ui
 
-import com.ilyakrn.cellauto.ui.models.UserFieldAction
-import com.ilyakrn.cellauto.ui.views.logic.BaseLogicView
+import com.ilyakrn.cellauto.ui.views.logic.LifeGameLogicView
 import com.ilyakrn.cellauto.ui.views.logic.ShadowLogicView
-import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.GridLayout
@@ -22,11 +20,11 @@ class SelectWindow : JFrame("Cell Auto") {
         super.show()
         layout = null
 
-        val textFieldWidth = 200
-        val textFieldHeight = 20
-        val textSize = 15
+        val textFieldWidth = 400
+        val textFieldHeight = 40
+        val textSize = 30
 
-        minimumSize = Dimension(textFieldWidth, 120)
+        minimumSize = Dimension(textFieldWidth, textFieldHeight * 6)
 
         fun createTextField(title: String, textField: JTextField, x: Int, y: Int){
             val panel = JPanel(GridLayout(1, 2))
@@ -44,9 +42,9 @@ class SelectWindow : JFrame("Cell Auto") {
         createTextField("select width: ", widthText, 0, textFieldHeight * 1)
         createTextField("select cell size: ", cellSizeText, 0, textFieldHeight * 2)
 
-        val confirmButton = JButton("run")
-        confirmButton.setBounds(0, textFieldHeight * 3, textFieldWidth, textFieldHeight)
-        confirmButton.addActionListener {
+        val shadowButton = JButton("shadow")
+        shadowButton.setBounds(0, textFieldHeight * 3, textFieldWidth, textFieldHeight)
+        shadowButton.addActionListener {
             try{
                 FieldWindow(cellSizeText.text.toInt(), "${heightText.text}x${widthText.text} (${cellSizeText.text})", ShadowLogicView(heightText.text.toInt(), widthText.text.toInt())).show()
             } catch (e: Exception){
@@ -54,7 +52,20 @@ class SelectWindow : JFrame("Cell Auto") {
                 throw RuntimeException("incorrect input")
             }
         }
-        add(confirmButton)
+        add(shadowButton)
+
+        val lifeGameButton = JButton("life game")
+        lifeGameButton.setBounds(0, textFieldHeight * 4, textFieldWidth, textFieldHeight)
+        lifeGameButton.addActionListener {
+            try{
+                FieldWindow(cellSizeText.text.toInt(), "${heightText.text}x${widthText.text} (${cellSizeText.text})", LifeGameLogicView(heightText.text.toInt(), widthText.text.toInt())).show()
+            } catch (e: Exception){
+                e.printStackTrace()
+                throw RuntimeException("incorrect input")
+            }
+        }
+        add(lifeGameButton)
+
         pack()
 
     }

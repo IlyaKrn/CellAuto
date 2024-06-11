@@ -12,12 +12,29 @@ class ShadowLogicView(h: Int, w: Int) : BaseLogicView<Int>(Array(h){ Array(w){0}
     }
 
     override fun doAction(x: Int, y: Int, action: UserFieldAction) {
-        field[x][y] = 10000
+        when(action){
+            UserFieldAction.RIGHT_CLICK -> {
+                field[x][y] -= 10000
+            }
+            UserFieldAction.LEFT_CLICK -> {
+                field[x][y] += 10000
+            }
+            UserFieldAction.WHEEL_CLICK -> {
+
+            }
+            UserFieldAction.WHEEL_ROLL_FORWARD -> {
+
+            }
+            UserFieldAction.WHEEL_ROLL_BACKWARD -> {
+
+            }
+        }
     }
 
     override fun initUI() {
         Thread{
             while (true){
+                val start = System.currentTimeMillis()
                 for (i in field.indices){
                     for (j in 0..<field[0].size){
                         var sum = 0
