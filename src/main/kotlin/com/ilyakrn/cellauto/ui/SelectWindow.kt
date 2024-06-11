@@ -1,7 +1,9 @@
 package com.ilyakrn.cellauto.ui
 
-import com.ilyakrn.cellauto.impl.shadows.ShadowColorRules
-import com.ilyakrn.cellauto.impl.shadows.ShadowFieldRules
+import com.ilyakrn.cellauto.ui.models.UserFieldAction
+import com.ilyakrn.cellauto.ui.views.logic.BaseLogicView
+import com.ilyakrn.cellauto.ui.views.logic.ShadowLogicView
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.GridLayout
@@ -25,7 +27,6 @@ class SelectWindow : JFrame("Cell Auto") {
         val textSize = 15
 
         minimumSize = Dimension(textFieldWidth, 120)
-      //  maximumSize = Dimension(textFieldWidth, textFieldHeight * 4)
 
         fun createTextField(title: String, textField: JTextField, x: Int, y: Int){
             val panel = JPanel(GridLayout(1, 2))
@@ -47,7 +48,7 @@ class SelectWindow : JFrame("Cell Auto") {
         confirmButton.setBounds(0, textFieldHeight * 3, textFieldWidth, textFieldHeight)
         confirmButton.addActionListener {
             try{
-                FieldWindow(heightText.text.toInt(), widthText.text.toInt(), cellSizeText.text.toInt(), "${heightText.text}x${widthText.text} (${cellSizeText.text})", ShadowFieldRules(), ShadowColorRules()).show()
+                FieldWindow(cellSizeText.text.toInt(), "${heightText.text}x${widthText.text} (${cellSizeText.text})", ShadowLogicView(heightText.text.toInt(), widthText.text.toInt())).show()
             } catch (e: Exception){
                 e.printStackTrace()
                 throw RuntimeException("incorrect input")

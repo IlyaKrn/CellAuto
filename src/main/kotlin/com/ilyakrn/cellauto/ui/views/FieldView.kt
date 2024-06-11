@@ -1,4 +1,4 @@
-package com.ilyakrn.cellauto.ui
+package com.ilyakrn.cellauto.ui.views
 
 import com.ilyakrn.cellauto.logic.ColorRules
 import java.awt.Color
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage
 import javax.swing.JPanel
 
 
-class FieldView(private val fHeight: Int, private val fWidth: Int, private val cellSize: Int, private val colorRules: ColorRules<Int>) : JPanel() {
+class FieldView<T>(fHeight: Int, fWidth: Int, private val cellSize: Int, private val colorRules: ColorRules<T>) : JPanel() {
 
 
     private var canvas: BufferedImage = BufferedImage(fWidth * cellSize, fHeight * cellSize, BufferedImage.TYPE_INT_ARGB)
@@ -29,9 +29,10 @@ class FieldView(private val fHeight: Int, private val fWidth: Int, private val c
         repaint()
     }
 
-    fun update(field: Array<Array<Int>>){
-        for (i in 0..field.size-1) {
-            for (j in 0..field[0].size-1) {
+    fun update(field: Array<Array<T>>){
+        for (i in field.indices) {
+            for (j in 0..<field[0].size) {
+                println(field[i][j])
                 drawRect(colorRules.getColor(field[i][j]), i * cellSize, j * cellSize, cellSize, cellSize)
             }
         }
