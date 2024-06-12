@@ -1,4 +1,4 @@
-package com.ilyakrn.cellauto.logic
+package com.ilyakrn.cellauto.ui.views.logic.base
 
 import java.awt.Color
 

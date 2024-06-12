@@ -1,9 +1,8 @@
 package com.ilyakrn.cellauto.ui.views.logic
 
 import com.ilyakrn.cellauto.ui.models.UserFieldAction
-import com.ilyakrn.cellauto.ui.views.FieldView
+import com.ilyakrn.cellauto.ui.views.logic.base.BaseLogicView
 import java.awt.Color
-import javax.xml.bind.JAXBElement.GlobalScope
 
 class LifeGameLogicView(h: Int, w: Int) : BaseLogicView<Boolean>(Array(h){ Array(w){false} }) {
 
@@ -27,26 +26,31 @@ class LifeGameLogicView(h: Int, w: Int) : BaseLogicView<Boolean>(Array(h){ Array
                 field[x][y] = true
                 notifyField()
             }
-            UserFieldAction.WHEEL_CLICK -> {
-                run = !run
+            UserFieldAction.WHEEL_ROLL_FORWARD -> { if(delay >= 10) delay -= 10 }
+            UserFieldAction.WHEEL_ROLL_BACKWARD -> { delay += 10 }
+            UserFieldAction.SPACE -> { run = !run }
+            UserFieldAction.UP -> {delay += 10 }
+            UserFieldAction.DOWN -> {delay = if(delay - 10 >= 0) delay - 10 else 0 }
+            UserFieldAction.ENTER -> {
+                for (i in field.indices){
+                    for (j in field[0].indices){
+                        field[i][j] = false
+                    }
+                }
+                run = false
+                notifyField()
             }
-            UserFieldAction.WHEEL_ROLL_FORWARD -> {
-                if(delay >= 10)
-                    delay -= 10
-            }
-            UserFieldAction.WHEEL_ROLL_BACKWARD -> {
-                delay += 10
 
-            }
+            else -> { }
         }
     }
 
     override fun initUI() {
         Thread{
             notifyField()
+            val tempField = Array(field.size) {Array(if(field.size > 0) field[0].size else 0){ false }}
             while (true){
                 if(run) {
-                    val start = System.currentTimeMillis()
                     for (i in field.indices) {
                         for (j in 0..<field[0].size) {
                             var count = 0
@@ -62,11 +66,25 @@ class LifeGameLogicView(h: Int, w: Int) : BaseLogicView<Boolean>(Array(h){ Array
                                 count--
 
 
-                            if (count in 2..2)
-                                field[i][j] = true
-                            else
-                                field[i][j] = false
+                            if (field[i][j]
+                                && (count == 2
+                                        || count == 3)) {
+                                tempField[i][j] = true
+                            }
 
+                            else if (!field[i][j]
+                                && count == 3) {
+                                tempField[i][j] = true
+                            }
+
+                            else {
+                                tempField[i][j] = false
+                            }
+                        }
+                    }
+                    for (i in field.indices) {
+                        for (j in field[0].indices) {
+                            field[i][j] = tempField[i][j]
                         }
                     }
                     notifyField()

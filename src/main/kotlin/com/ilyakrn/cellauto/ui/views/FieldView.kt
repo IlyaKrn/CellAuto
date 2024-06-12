@@ -1,6 +1,6 @@
 package com.ilyakrn.cellauto.ui.views
 
-import com.ilyakrn.cellauto.logic.ColorRules
+import com.ilyakrn.cellauto.ui.views.logic.base.ColorRules
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D

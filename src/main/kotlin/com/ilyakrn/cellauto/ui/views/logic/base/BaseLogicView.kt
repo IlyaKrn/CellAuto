@@ -1,6 +1,5 @@
-package com.ilyakrn.cellauto.ui.views.logic
+package com.ilyakrn.cellauto.ui.views.logic.base
 
-import com.ilyakrn.cellauto.logic.ColorRules
 import com.ilyakrn.cellauto.ui.models.UserFieldAction
 import javax.swing.JPanel
 
